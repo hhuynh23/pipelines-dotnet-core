@@ -23,8 +23,6 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration Release' # Update this to match your need
 
-- task: PublishBuildArtifacts@1
-
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
@@ -32,11 +30,10 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
 
+- task: PublishBuildArtifacts@1
+
 - task: AzureRmWebAppDeployment@4
   inputs:
-    ConnectionType: 'AzureRM'
     azureSubscription: 'Visual Studio Enterprise(0e10be42-fc35-45f1-9c83-d19b6f65c352)'
-    appType: 'webApp'
     WebAppName: 'pipelines-dotnet-core-test'
-    enableCustomDeployment: true
-    DeploymentType: 'webDeploy'
+    Package: $(System.ArtifactsDirectory)/**/*.zip
