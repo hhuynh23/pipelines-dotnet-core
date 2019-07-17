@@ -38,6 +38,5 @@ steps:
     azureSubscription: 'Visual Studio Enterprise(0e10be42-fc35-45f1-9c83-d19b6f65c352)'
     appType: 'webApp'
     WebAppName: 'pipelines-dotnet-core-test'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
     enableCustomDeployment: true
     DeploymentType: 'webDeploy'
