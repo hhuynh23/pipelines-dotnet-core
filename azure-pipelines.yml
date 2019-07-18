@@ -33,7 +33,7 @@ steps:
   inputs:
     command: test
     projects: '**/pipelines-dotnet-core-test-2/*.csproj'
-    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]* /p:MergeWith=**/coverage.json'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]* /p:MergeWith="D:/a/1/s/pipelines-dotnet-core-test/coverage.json"'
 
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
