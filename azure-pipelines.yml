@@ -14,14 +14,17 @@ variables:
 
 steps:
 - script:
-    dotnet add package coverlet.msbuild
+   dotnet add pipelines-dotnet-core-test package coverlet.msbuild
   displayName: 'Install Tools for Coverage'
 
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- script: coverlet "**/pipelines-dotnet-core-test.dll" --target "dotnet" --targetargs "test --no-build" --format opencover
-  displayName: 'Coverlet code coverage'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*test/*.csproj'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]*'
 
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
@@ -29,7 +32,7 @@ steps:
     SonarQube: haihnsonarqube
     projectKey: 'pipeline-dotnet-core'
     projectName: 'pipeline-dotnet-core'
-    extraProperties: '/d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**Tests*.cs, **.ts, **.js"'
+    extraProperties: '/d:sonar.cs.opencover.reportsPaths="$(System.DefaultWorkingDirectory)/**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**Tests*.cs, **.ts, **.js"'
     
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
@@ -38,7 +41,7 @@ steps:
   inputs:
     command: test
     projects: '**/*test/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]*'
 
 - task: DotNetCoreCLI@2
   inputs:
