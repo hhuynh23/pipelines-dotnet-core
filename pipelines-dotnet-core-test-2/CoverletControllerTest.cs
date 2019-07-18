@@ -20,5 +20,12 @@ namespace pipelines_dotnet_core_test_2
             controller.List();
             Assert.IsTrue(true);
         }
+
+        [TestMethod]
+        public void Detail_Test()
+        {
+            controller.Detail();
+            Assert.IsTrue(true);
+        }
     }
 }
