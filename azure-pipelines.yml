@@ -26,14 +26,9 @@ steps:
     projects: '**/*test/*.csproj'
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]*'
 
-- task: SonarQubePrepare@4
+- script: dotnet **\SonarScanner.MSBuild.exe begin /k:pipeline-dotnet-core /d:sonar.cs.opencover.reportsPaths="$(System.DefaultWorkingDirectory)/**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**Tests*.cs, **.ts, **.js"
   displayName: 'Prepare analysis on SonarQube'
-  inputs:
-    SonarQube: haihnsonarqube
-    projectKey: 'pipeline-dotnet-core'
-    projectName: 'pipeline-dotnet-core'
-    extraProperties: '/d:sonar.cs.opencover.reportsPaths="$(System.DefaultWorkingDirectory)/**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**Tests*.cs, **.ts, **.js"'
-    
+  
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
