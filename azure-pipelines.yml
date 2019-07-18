@@ -26,7 +26,7 @@ steps:
     projects: '**/*test/*.csproj'
     arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]*'
 
-- task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+- task: reportgenerator@4
   displayName: ReportGenerator
   inputs:
     reports: '$(System.DefaultWorkingDirectory)\**\coverage.opencover.xml'
