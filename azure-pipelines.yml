@@ -19,7 +19,7 @@ steps:
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
   inputs:
-    SonarQube: 'haihnsonarqubedns.eastus.azurecontainer.io:9000'
+    SonarQube: '0e10be42-fc35-45f1-9c83-d19b6f65c352'
     ProjectKey: pipeline-dotnet-core
     ProjectName: pipeline-dotnet-core
 
