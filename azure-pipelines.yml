@@ -42,19 +42,20 @@ steps:
     projectKey: 'pipeline-dotnet-core'
     projectName: 'pipeline-dotnet-core'
     extraProperties: |
-      sonar.cs.opencover.reportsPaths=**\pipelines-dotnet-core-test-2\coverage.opencover.xml
+      sonar.cs.opencover.reportsPaths=D:\a\1\s\pipelines-dotnet-core-test-2\coverage.opencover.xml
       sonar.coverage.exclusions=**Tests*.cs, **.ts, **.js
     
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: test
-    projects: '**/*test*/*.csproj'
-    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]*'
+- task: SonarQubeAnalyze@4
+  displayName: 'Run Code Analysis'
+
+- task: SonarQubePublish@4
+  displayName: 'Publish Quality Gate Result'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Publish'
   inputs:
     command: publish
     publishWebProjects: True
@@ -62,12 +63,6 @@ steps:
     zipAfterPublish: True
 
 - task: PublishBuildArtifacts@1
-
-- task: SonarQubeAnalyze@4
-  displayName: 'Run Code Analysis'
-
-- task: SonarQubePublish@4
-  displayName: 'Publish Quality Gate Result'
   
 - task: AzureRmWebAppDeployment@4
   inputs:
