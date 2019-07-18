@@ -14,8 +14,7 @@ variables:
 
 steps:
 - script: |
-   dotnet add Okuyami.WebServices.Tests package coverlet.msbuild
-   dotnet add Okuyami.WebApp.Tests package coverlet.msbuild
+   dotnet add pipelines-dotnet-core-test package coverlet.msbuild
   displayName: 'Install Tools for Coverage'
 
 - script: dotnet build --configuration $(buildConfiguration)
