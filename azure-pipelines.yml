@@ -13,8 +13,16 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- script: |
+   dotnet add Okuyami.WebServices.Tests package coverlet.msbuild
+   dotnet add Okuyami.WebApp.Tests package coverlet.msbuild
+  displayName: 'Install Tools for Coverage'
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- script: coverlet "**/pipelines-dotnet-core-test.dll" --target "dotnet" --targetargs "test --no-build" --format opencover
+  displayName: 'Coverlet code coverage'
 
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
@@ -22,13 +30,10 @@ steps:
     SonarQube: haihnsonarqube
     projectKey: 'pipeline-dotnet-core'
     projectName: 'pipeline-dotnet-core'
-
-- task: DotNetCoreCLI@2
-  displayName: Build
-  inputs:
-    command: build
-    projects: '*.sln'
-    arguments: '--configuration Release' # Update this to match your need
+    extraProperties: '/d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.coverage.exclusions="**Tests*.cs, **.ts, **.js"'
+    
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   inputs:
