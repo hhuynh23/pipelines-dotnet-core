@@ -27,7 +27,7 @@ steps:
   displayName: Build
   inputs:
     command: build
-    projects: '**/*.csproj'
+    projects: '*.sln'
     arguments: '--configuration Release' # Update this to match your need
 
 - task: DotNetCoreCLI@2
