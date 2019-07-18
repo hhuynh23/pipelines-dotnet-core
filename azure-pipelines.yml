@@ -13,8 +13,8 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: |
-   dotnet add pipelines-dotnet-core-test package coverlet.msbuild
+- script:
+    dotnet add package coverlet.msbuild
   displayName: 'Install Tools for Coverage'
 
 - script: dotnet build --configuration $(buildConfiguration)
