@@ -13,19 +13,5 @@ namespace pipelines_dotnet_core_test_2
             controller.Index();
             Assert.IsTrue(true);
         }
-
-        [TestMethod]
-        public void Privacy_Test()
-        {
-            controller.Privacy();
-            Assert.IsTrue(true);
-        }
-
-        [TestMethod]
-        public void Privacy2_Test()
-        {
-            controller.Privacy();
-            Assert.IsFalse(false);
-        }
     }
 }
