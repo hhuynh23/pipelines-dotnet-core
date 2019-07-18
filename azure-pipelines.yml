@@ -16,12 +16,12 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- task: SonarQubePrepare@4
+- task: SonarSource.sonarqube.15B84CA1-B62F-4A2A-A403-89B77A063157.SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
   inputs:
-    SonarQube: '0e10be42-fc35-45f1-9c83-d19b6f65c352'
-    ProjectKey: pipeline-dotnet-core
-    ProjectName: pipeline-dotnet-core
+    SonarQube: haihnsonarqube
+    projectKey: 'pipeline-dotnet-core'
+    projectName: 'pipeline-dotnet-core'
 
 - task: DotNetCoreCLI@2
   displayName: Build
