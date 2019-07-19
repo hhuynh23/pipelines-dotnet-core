@@ -19,18 +19,17 @@ steps:
   displayName: 'Install Tools for Coverage'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Test1'
+  displayName: 'Test'
   inputs:
     command: test
-    projects: '**/pipelines-dotnet-core-test/*.csproj'
-    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:Exclude=[**.Views]*'
+    projects: '**/*[Tt]est*/*.csproj'
+    arguments: '/p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]* --configuration $(BuildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Test2'
+- task: reportgenerator@4
+  displayName: ReportGenerator
   inputs:
-    command: test
-    projects: '**/pipelines-dotnet-core-test-2/*.csproj'
-    arguments: '--configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude=[**.Views]* /p:MergeWith="D:/a/1/s/pipelines-dotnet-core-test/coverage.json"'
+    reports: '$(System.DefaultWorkingDirectory)\**\coverage.opencover.xml'
+    targetdir: '$(Common.TestResultsDirectory)\Coverage\Reports'
 
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
@@ -39,7 +38,7 @@ steps:
     projectKey: 'pipeline-dotnet-core'
     projectName: 'pipeline-dotnet-core'
     extraProperties: |
-      sonar.cs.opencover.reportsPaths=D:\a\1\s\pipelines-dotnet-core-test-2\coverage.opencover.xml
+      sonar.cs.opencover.reportsPaths=$(Common.TestResultsDirectory)\Coverage\Reports\coverage.opencover.xml
       sonar.coverage.exclusions=**Tests*.cs, **.ts, **.js
     
 - script: dotnet build --configuration $(buildConfiguration)
