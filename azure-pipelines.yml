@@ -30,7 +30,7 @@ steps:
   inputs:
     reports: '$(System.DefaultWorkingDirectory)\**\coverage.opencover.xml'
     targetdir: '$(Common.TestResultsDirectory)\Coverage\Reports'
-    reporttypes: 'HtmlInline_AzurePipelines;opencover'
+    reporttypes: 'HtmlInline_AzurePipelines;SonarQube'
 
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
