@@ -39,7 +39,7 @@ steps:
     projectKey: 'pipeline-dotnet-core'
     projectName: 'pipeline-dotnet-core'
     extraProperties: |
-      sonar.cs.opencover.reportsPaths=$(Common.TestResultsDirectory)\Coverage\Reports\SonarQube.xml
+      sonar.cs.opencover.reportsPaths=D:\a\1\TestResults\Coverage\Reports\SonarQube.xml
       sonar.coverage.exclusions=**Tests*.cs, **.ts, **.js
     
 - script: dotnet build --configuration $(buildConfiguration)
