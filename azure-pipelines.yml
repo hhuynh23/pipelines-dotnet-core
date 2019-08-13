@@ -27,7 +27,7 @@ steps:
 - task: SonarQubePrepare@4
   displayName: 'Prepare analysis on SonarQube'
   inputs:
-    SonarQube: https://sonarcloud.io
+    SonarQube: haihnsonar
     projectKey: 'MyToDo-trainee44'
     projectName: 'trainee44'
     extraProperties: |
