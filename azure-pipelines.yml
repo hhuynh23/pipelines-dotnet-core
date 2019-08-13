@@ -15,7 +15,6 @@ variables:
 steps:
 - script: |
     dotnet add pipelines-dotnet-core-test package coverlet.msbuild
-    dotnet add pipelines-dotnet-core-test-2 package coverlet.msbuild
   displayName: 'Install Tools for Coverage'
 
 - task: DotNetCoreCLI@2
